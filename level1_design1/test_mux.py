@@ -18,7 +18,7 @@ async def test_mux(dut):
             await Timer(1,units="ns")
    
             if(dut.out.value != val):
-              print("Mux output is incorrect. Expected:{EXP},Obtained:{OBT} for sel:{SEL}".format(EXP=val,OBT=dut.out.value.integer,SEL=sel))
+              #print("Mux output is incorrect. Expected:{EXP},Obtained:{OBT} for sel:{SEL}".format(EXP=val,OBT=dut.out.value.integer,SEL=sel))
               error_message = error_message + "(inp="+str(val)+", out="+str(dut.out.value.integer)+", sel="+str(sel)+"),"
               
             exec("dut.%s.value = %d" % (("inp"+str(sel)),0))
