@@ -4,10 +4,12 @@ TOPLEVEL_LANG ?= verilog
 
 PWD=$(shell pwd)
 
-VERILOG_SOURCES = $(PWD)/               # provide your design path
+export PYTHONPATH := $(PWD):$(PYTHONPATH)            # provide your design path
 
-TOPLEVEL :=           # design file
-MODULE   :=     # test file
+VERILOG_SOURCES = $(PWD)/carry_save_multiplier.v
+
+TOPLEVEL := csmulti_fullbasecell        # design file
+MODULE   := test_carry_save_multiplier   # test file
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 
