@@ -99,7 +99,7 @@ def run_edge_case_testing(dut):
     
             # comparison
             error_message = f'\nInstr:{hex(mav_putvalue_instr)[2:].zfill(8)}.Inp: {hex(mav_putvalue_src1)[2:].zfill(8)},{hex(mav_putvalue_src2)[2:].zfill(8)},{hex(mav_putvalue_src3)[2:].zfill(8)}.Output:DUT:{hex(dut_output)[2:].zfill(8)} MODEL:{hex(expected_mav_putvalue)[2:].zfill(8)}'
-            if((dut_output != expected_mav_putvalue) and (expected_mav_putvalue != 0)):
+            if((dut_output != expected_mav_putvalue) and (expected_mav_putvalue != -1)):
                 error_messages.append(error_message)
 
     assert len(error_messages) == 0, "".join(error_messages)
@@ -122,7 +122,7 @@ def run_random_testing(dut):
 
     for i in range(0,10000):
         expected_mav_putvalue = 0
-        while(expected_mav_putvalue == 0):
+        while(expected_mav_putvalue == -1):
             mav_putvalue_src1 = random.randint(0,4294967295)
             mav_putvalue_src2 = random.randint(0,4294967295)
             mav_putvalue_src3 = random.randint(0,4294967295)
