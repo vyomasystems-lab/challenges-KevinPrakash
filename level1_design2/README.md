@@ -1,6 +1,6 @@
 # Sequence Detector Verification
 
-![] (https://github.com/vyomasystems-lab/challenges-KevinPrakash/blob/master/Capture.JPG)
+![](https://github.com/vyomasystems-lab/challenges-KevinPrakash/blob/master/Capture.JPG)
 
 ## Verification Environment
  
