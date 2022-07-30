@@ -22,7 +22,7 @@ module csmulti_fullbasecell#(parameter bitsize = 8)(factor0, factor1, product);
   //Generate basecell modules
   generate
       for (k = 0; k < bitsize+1; k = k + 1) begin
-          for (l = 0; l < bitsize; l = l + 1) begin : basecell
+          for (l = 0; l < bitsize; l = l + 1 ) begin : basecell 
               basecell_fa bscll(f1_i[k][l], f2_i[k][l], b_i[k][l], c_i[k][l], sum_o[k][l], c_o[k][l]);
           end
       end
@@ -34,7 +34,7 @@ module csmulti_fullbasecell#(parameter bitsize = 8)(factor0, factor1, product);
           for(j = 0; j < bitsize; j = j + 1) begin
               if(i != bitsize) begin
                   f1_i[i][j] = factor0[i];
-                  f2_i[i][j] = factor1[j];
+                  f2_i[i][j] = factor1[i]; // Bug 1: index mismatch.factor1[j]. All testcases will fail except for 0 and ff input
               end else begin
                   if(j == 0) begin
                       f1_i[i][j] = 1'b0;
@@ -46,7 +46,7 @@ module csmulti_fullbasecell#(parameter bitsize = 8)(factor0, factor1, product);
               end
 
               if(i == 0) begin
-                  b_i[i][j] = 1'b0;
+                   b_i[i][j] = 1'b0;
               end else if(j == (bitsize - 1)) begin
                   b_i[i][j] = 1'b0;
               end else begin
@@ -70,9 +70,9 @@ module csmulti_fullbasecell#(parameter bitsize = 8)(factor0, factor1, product);
             product[i] = sum_vec[i][0];
       end
       for(i = 1; i < bitsize; i = i + 1) begin
-            product[bitsize+i] = sum_vec[bitsize][i];
+            product[bitsize+i] = sum_vec[bitsize][i]; 
       end
-      product[(2*bitsize)] = carry_vec[bitsize][bitsize-1];
+      product[(2*bitsize)] = carry_vec[bitsize-1][bitsize-1]; // Bug 2 :carry_vec[bitsize][bitsize-1] is supposed to be bitsize .last bit of product is incorrect will show only in edge case testing
   end
 
 endmodule // Parameterized Carry Save Multiplier
@@ -83,7 +83,7 @@ module basecell_ha(f1_i, f2_i, b_i, sum_o, c_o);
 
   wire pp;
 
-  assign pp = f1_i & f2_i;
+  assign pp = f1_i | f2_i; // Bug 3: f1_i & f2_i.any number with which will result in carry will fail
 
   HA adder(pp, b_i, sum_o, c_o);
 
