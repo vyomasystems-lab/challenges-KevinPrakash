@@ -20,6 +20,7 @@ def clock_gen(signal):
         signal.value <= 1
         yield Timer(1) 
 
+
 # Sample Test
 @cocotb.test()
 def run_edge_case_testing(dut):
@@ -34,6 +35,7 @@ def run_edge_case_testing(dut):
 
     valid_opcodes = [[0,7,51],[0,6,51],[0,4,51],[32,7,51],[32,6,51],[32,4,51],[0,1,51],[0,5,51],[32,5,51],[16,1,51],[16,5,51],[48,1,51],[48,5,51],[36,1,51],[20,1,51],[52,1,51]\
     ,[36,5,51],[20,5,51],[52,5,51],[0,1,19],[0,5,19],[32,5,19],[16,1,19],[16,5,19],[48,5,19],[36,1,19],[20,1,19],[52,1,19],[36,5,19],[20,5,19],[52,5,19]]
+    mask = 0b11111110000000000111000001111111
 
     error_messages = []
     for opcode in valid_opcodes:
@@ -93,12 +95,12 @@ def run_edge_case_testing(dut):
 
             # obtaining the output
             dut_output = dut.mav_putvalue.value
-
+            field1__h109 = dut.field1__h109.value
             #cocotb.log.info(f'DUT OUTPUT={hex(dut_output)}')
             #cocotb.log.info(f'EXPECTED OUTPUT={hex(expected_mav_putvalue)}')
     
             # comparison
-            error_message = f'\nInstr:{hex(mav_putvalue_instr)[2:].zfill(8)}.Inp: {hex(mav_putvalue_src1)[2:].zfill(8)},{hex(mav_putvalue_src2)[2:].zfill(8)},{hex(mav_putvalue_src3)[2:].zfill(8)}.Output:DUT:{hex(dut_output)[2:].zfill(8)} MODEL:{hex(expected_mav_putvalue)[2:].zfill(8)}'
+            error_message = f'\nInstr:{hex(mask&mav_putvalue_instr)[2:].zfill(8)}.Internal:{hex(field1__h109)[2:].zfill(8)}.Inp: {hex(mav_putvalue_src1)[2:].zfill(8)},{hex(mav_putvalue_src2)[2:].zfill(8)},{hex(mav_putvalue_src3)[2:].zfill(8)}.Output:DUT:{hex(dut_output)[2:].zfill(8)} MODEL:{hex(expected_mav_putvalue)[2:].zfill(8)}'
             if((dut_output != expected_mav_putvalue) and (expected_mav_putvalue != -1)):
                 error_messages.append(error_message)
 
@@ -117,11 +119,12 @@ def run_random_testing(dut):
     dut.RST_N.value <= 1
 
     error_messages = []
+    mask = 0b11111110000000000111000001111111
 
  
 
-    for i in range(0,10000):
-        expected_mav_putvalue = 0
+    for i in range(0,5000):
+        expected_mav_putvalue = -1
         while(expected_mav_putvalue == -1):
             mav_putvalue_src1 = random.randint(0,4294967295)
             mav_putvalue_src2 = random.randint(0,4294967295)
@@ -146,7 +149,7 @@ def run_random_testing(dut):
         #cocotb.log.info(f'EXPECTED OUTPUT={hex(expected_mav_putvalue)}')
     
         # comparison
-        error_message = f'\nInstr:{hex(mav_putvalue_instr)[2:].zfill(8)}.Inp: {hex(mav_putvalue_src1)[2:].zfill(8)},{hex(mav_putvalue_src2)[2:].zfill(8)},{hex(mav_putvalue_src3)[2:].zfill(8)}.Output:DUT:{hex(dut_output)[2:].zfill(8)} MODEL:{hex(expected_mav_putvalue)[2:].zfill(8)}'
+        error_message = f'\nInstr:{hex(mask&mav_putvalue_instr)[2:].zfill(8)}.Inp: {hex(mav_putvalue_src1)[2:].zfill(8)},{hex(mav_putvalue_src2)[2:].zfill(8)},{hex(mav_putvalue_src3)[2:].zfill(8)}.Output:DUT:{hex(dut_output)[2:].zfill(8)} MODEL:{hex(expected_mav_putvalue)[2:].zfill(8)}'
         if(dut_output != expected_mav_putvalue):
             error_messages.append(error_message)
 

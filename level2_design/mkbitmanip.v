@@ -596,6 +596,8 @@ module mkbitmanip(CLK,
 		x__h39722,
 		x__h39744,
 		x__h39889,
+		temp2,
+		temp1,
 		x__h4402,
 		x__h4625,
 		x__h6800,
@@ -987,7 +989,7 @@ module mkbitmanip(CLK,
 	     { x__h33,
 	       (mav_putvalue_instr[6:0] == 7'b0110011 ||
 		mav_putvalue_instr[6:0] == 7'b0010011) &&
-	       mav_putvalue_instr_BITS_31_TO_25_EQ_0b100000_A_ETC___d2336 } ;
+	       mav_putvalue_instr_BITS_31_TO_25_EQ_0b100000_A_ETC___d2336 } ; // kp_debug: possiblly this code should be
   assign RDY_mav_putvalue = 1'd1 ;
   assign CAN_FIRE_mav_putvalue = 1'd1 ;
   assign WILL_FIRE_mav_putvalue = EN_mav_putvalue ;
@@ -1848,6 +1850,8 @@ module mkbitmanip(CLK,
 	       IF_mav_putvalue_src2_BIT_8_97_THEN_IF_mav_putv_ETC___d872 ;
   assign NOT_mav_putvalue_instr_BITS_14_TO_12_CONCAT_ma_ETC___d339 =
 	     x__h410 != 6'b001011 &&
+		(mav_putvalue_instr[31:27] != 5'b01000 ||
+	     x__h410 != 6'b111011) &&
 	     (mav_putvalue_instr[31:27] != 5'b00100 ||
 	      x__h410 != 6'b001001) &&
 	     x__h410 != 6'b101011 &&
@@ -3908,7 +3912,9 @@ module mkbitmanip(CLK,
   assign x__h39669 = data__h39658 & mask__h39657 ;
   assign x__h39722 = ~x__h39744 ;
   assign x__h39744 = 32'hFFFFFFFF << shamt__h39728 ;
-  assign x__h39889 = mav_putvalue_src1 & mav_putvalue_src2 ;
+  assign temp1 = mav_putvalue_src1 & mav_putvalue_src2;
+  assign temp2 = mav_putvalue_src1 & ~mav_putvalue_src2;
+  assign x__h39889 = (((mav_putvalue_instr[6:0] == 'b0110011)&&(mav_putvalue_instr[14:12] == 'b111)&&(mav_putvalue_instr[31:25] == 'b0100000))?temp2:temp1) ; // kp_debug
   assign x__h410 = { mav_putvalue_instr[14:12], mav_putvalue_instr[6:4] } ;
   assign x__h4309 = mav_putvalue_src1[x__h4425] ;
   assign x__h4402 = 32'd1 << x__h4425 ;

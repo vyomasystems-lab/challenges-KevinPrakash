@@ -66,8 +66,9 @@ In the state machine for SEQ_1011 when inp_bit is 1 it should go to SEQ_1. If in
 
 ## Verification Stratergy
 
-Due to the simple nature of the design, it is possible to feed every single input and test against every single output. 
+Due to the simple nature of the design, it is possible to feed every single input and test against every single output.
+Reset functionality was also verified.
 
 ## Is Verification complete
 
-Verification is complete since every value of input and every value of output was tested. Additional testing would involve setting a value for every inp singal. Currently only the inp whose sel is set has a value assigned and the remaining are set to 0.
+Yes, no other form of testing is possible
