@@ -16,6 +16,7 @@ At the end of the test the failing sequences are printed
                 failed_stimulus.append(error_message)
 
 The test also checks if seq_seen is asserted for 3 clock cycles after a reset is given.
+                if(dut.seq_seen.value == 1): assert (i - prev_reset > 3), "Sequence is detected even after reset for stimulus: {MSG},reset at:{SL}".format(MSG=",".join(failed_stimulus),SL=str(prev_reset-i))
 
 ### Test 2
 Testing overlap situations

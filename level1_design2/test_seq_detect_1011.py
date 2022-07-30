@@ -29,6 +29,7 @@ async def test_random_inp_and_reset(dut):
     failed_stimulus = []
     prev_reset = 0
 
+
     for i in range(5000):
         inp = random.randint(0,1)
         previous_inp.append(inp)
@@ -40,8 +41,11 @@ async def test_random_inp_and_reset(dut):
             dut.reset.value = 1
             prev_reset = i
 
-        #await FallingEdge(dut.clk)
+
         await Timer(10,units="us")
+
+        dut.reset.value = 0 # clearing reset after one clk cycle
+
 
         if((previous_inp[-4:] == sequence) and (dut.seq_seen.value == 0)):
             error_message = ""
@@ -49,6 +53,7 @@ async def test_random_inp_and_reset(dut):
                 error_message = error_message + str(i)
             if error_message not in failed_stimulus:
                 failed_stimulus.append(error_message)
+
         
         if(dut.seq_seen.value == 1): assert (i - prev_reset > 3), "Sequence is detected even after reset for stimulus: {MSG},reset at:{SL}".format(MSG=",".join(failed_stimulus),SL=str(prev_reset-i))
 

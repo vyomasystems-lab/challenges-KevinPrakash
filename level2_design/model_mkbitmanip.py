@@ -30,28 +30,28 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
     #print("func7 {0} immvalue1 {1} : func3 {2} opcode {3} ".format(func7,imm_value_1,func3,opcode))
     #print("func7_imm {0} func7_imm_SHFL {1} func7_1bit {2} ".format(func7_imm, func7_imm_SHFL, func7_1bit))
     if((func7 == "0100000") and (func3 == "111") and (opcode == "0110011") ):
-        print('--ANDN 1')
+        #print('--ANDN 1')
         mav_putvalue=mav_putvalue_src1 & (~mav_putvalue_src2)
         mav_putvalue=mav_putvalue & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0100000") and (func3 == "110") and (opcode == "0110011")):
-        print('--ORN 2')
+        #print('--ORN 2')
         mav_putvalue=mav_putvalue_src1 | (~mav_putvalue_src2)
         mav_putvalue=mav_putvalue & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0100000") and (func3 == "100") and (opcode == "0110011")):
-        print('--XNOR 3')
+        #print('--XNOR 3')
         mav_putvalue=mav_putvalue_src1 ^ (~mav_putvalue_src2)
         mav_putvalue=mav_putvalue & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0010000") and (func3 == "001") and (opcode == "0110011")):
-        print('--SLO  4')
+        #print('--SLO  4')
         shamt1 =mav_putvalue_src2 & (31)
         out=((mav_putvalue_src1)<< shamt1)
         res=out
@@ -68,7 +68,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0010000") and (func3 == "101") and (opcode == "0110011")):
-        print('--SRO  5')
+        #print('--SRO  5')
         out=((mav_putvalue_src1)>> shamt1)
         res=out
         min_i=32-shamt1
@@ -81,70 +81,70 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (func3 == "001") and (opcode == "0110011")):
-        print('--ROL  6')
+        #print('--ROL  6')
         out=(mav_putvalue_src1 << shamt1) | (mav_putvalue_src1 >> ((32-shamt1) & (31)))
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0110000") and (func3 == "101") and (opcode == "0110011")):
-        print('--ROR  7')
+        #print('--ROR  7')
         out=(mav_putvalue_src1 >> shamt1) | (mav_putvalue_src1 << ((32-shamt1) & (31)))
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0010000") and (func3 == "010") and (opcode == "0110011")):
-        print('--SH1ADD  8')
+        #print('--SH1ADD  8')
         out=(mav_putvalue_src1  << 1) +mav_putvalue_src2
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0010000") and (func3 == "100") and (opcode == "0110011")):
-        print('--SH2ADD  9')
+        #print('--SH2ADD  9')
         out=(mav_putvalue_src1  << 2) +mav_putvalue_src2
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0010000") and (func3 == "110") and (opcode == "0110011")):
-        print('--SH3ADD  10')
+        #print('--SH3ADD  10')
         out=(mav_putvalue_src1  << 3) +mav_putvalue_src2
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0100100") and (func3 == "001") and (opcode == "0110011")):
-        print('--SBCLR   11')
+        #print('--SBCLR   11')
         out= mav_putvalue_src1 & (~(1<<shamt1))
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0010100") and (func3 == "001") and (opcode == "0110011")):
-        print('--SBSET   12')
+        #print('--SBSET   12')
         out= mav_putvalue_src1 | (1<<shamt1)
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0110100") and (func3 == "001") and (opcode == "0110011")):
-        print('--SBINV  13')
+        #print('--SBINV  13')
         out= mav_putvalue_src1  ^ (1<<shamt1)
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0100100") and (func3 == "101") and (opcode == "0110011")):
-        print('--SBEXT  14')
+        #print('--SBEXT  14')
         out= 1 & (mav_putvalue_src1 >> shamt1)
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7 == "0010100") and (func3 == "101") and (opcode == "0110011")):
-        print('--GORC 15 (check)')
+        #print('--GORC 15 (check)')
         x=mav_putvalue_src1
         mav_putvalue=mav_putvalue_src1
         if (shamt1 & 1):
@@ -166,7 +166,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110100") and (func3 == "101") and (opcode == "0110011")):
-        print('--GREV  16 (should check)')
+        #print('--GREV  16 (should check)')
         x=mav_putvalue_src1
         mav_putvalue=mav_putvalue_src1
         if (shamt1 & 1):
@@ -188,14 +188,14 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_2bit == "11") and (func3 == "001") and (opcode == "0110011")):
-        print('--CMIX  17')
+        #print('--CMIX  17')
         out= (mav_putvalue_src1 & mav_putvalue_src2) |(mav_putvalue_src3 & (~mav_putvalue_src2))
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7_2bit == "11") and (func3 == "101") and (opcode == "0110011")):
-        print('--CMOV 18')
+        #print('--CMOV 18')
         if (mav_putvalue_src2):
             mav_putvalue=mav_putvalue_src1
         else:
@@ -204,7 +204,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_2bit == "10") and (func3 == "001") and (opcode == "0110011")):
-        print('--FSL 19')
+        #print('--FSL 19')
         shamt12= mav_putvalue_src2 & (63)
         A= mav_putvalue_src1
         B= mav_putvalue_src3
@@ -221,7 +221,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_2bit == "10") and (func3 == "101") and (opcode == "0110011")):
-        print('--FSR  20(check)')
+        #print('--FSR  20(check)')
         shamt12= mav_putvalue_src2 & (63)
         A= mav_putvalue_src1
         B= mav_putvalue_src3
@@ -238,7 +238,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "00000") and (func3 == "001") and (opcode == "0010011")):
-        print('--CLZ   21')
+        #print('--CLZ   21')
         x=bin(mav_putvalue_src1)[2:]
         x=x.zfill(32)
         mav_putvalue = len(x.split('1', 1)[0])
@@ -246,7 +246,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "00001") and (func3 == "001") and (opcode == "0010011")):
-        print('--CTZ    22')
+        #print('--CTZ    22')
         x=bin(mav_putvalue_src1)[2:]
         x=x.zfill(32)
         m = str(x)
@@ -255,7 +255,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
     
     if((func7 == "0110000") and (imm_value_1 == "00010") and (func3 == "001") and (opcode == "0010011")):
-        print('--PCNT   23')
+        #print('--PCNT   23')
         binary = bin(mav_putvalue_src1)
         setBits = [ones for ones in binary[2:] if ones=='1']
         mav_putvalue= len(setBits)
@@ -263,7 +263,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "00100") and (func3 == "001") and (opcode == "0010011")):
-        print('--SEXT.B  24')
+        #print('--SEXT.B  24')
         le=mav_putvalue_src1
         lex=bin(le)[2:]
         lex=lex.zfill(32)
@@ -283,7 +283,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "00101") and (func3 == "001") and (opcode == "0010011")):
-        print('--SEXT.H  25')
+        #print('--SEXT.H  25')
         le=mav_putvalue_src1
         lex=bin(le)[2:]
         lex=lex.zfill(32)
@@ -303,7 +303,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "10000") and (func3 == "001") and (opcode == "0010011")):
-        print('--CRC32.B 26')
+        #print('--CRC32.B 26')
         i=0
         x = mav_putvalue_src1
         while i<8:
@@ -314,7 +314,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "10001") and (func3 == "001") and (opcode == "0010011")):
-        print('--CRC32.H  27')
+        #print('--CRC32.H  27')
         i=0
         x = mav_putvalue_src1
         while i<16:
@@ -325,7 +325,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "10010") and (func3 == "001") and (opcode == "0010011")):
-        print('--CRC32.W  28')
+        #print('--CRC32.W  28')
         i=0
         x = mav_putvalue_src1
         while i<32:
@@ -336,7 +336,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "11000") and (func3 == "001") and (opcode == "0010011")):
-        print('--CRC32C.B 29')
+        #print('--CRC32C.B 29')
         i=0
         x = mav_putvalue_src1
         while i<8:
@@ -347,7 +347,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "11001") and (func3 == "001") and (opcode == "0010011")):
-        print('--CRC32C.H  30')
+        #print('--CRC32C.H  30')
         i=0
         x = mav_putvalue_src1
         while i<16:
@@ -358,7 +358,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0110000") and (imm_value_1 == "11010") and (func3 == "001") and (opcode == "0010011")):
-        print('--CRC32C.W  31')
+        #print('--CRC32C.W  31')
         i=0
         x = mav_putvalue_src1
         while i<32:
@@ -369,7 +369,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0000101")  and (func3 == "001") and (opcode == "0110011")):
-        print('--CLMUL  32')
+        #print('--CLMUL  32')
         x=0
         i=0
         while i<32:
@@ -381,7 +381,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0000101")  and (func3 == "011") and (opcode == "0110011")):
-        print('--CLMULH  33')
+        #print('--CLMULH  33')
         x=0
         i=1
         while i<32:
@@ -393,7 +393,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0000101")  and (func3 == "010") and (opcode == "0110011")):
-        print('--CLMULR  34')
+        #print('--CLMULR  34')
         x=0
         i=0
         while i<32:
@@ -405,7 +405,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0000101")  and (func3 == "100") and (opcode == "0110011")):
-        print('--MIN  35')
+        #print('--MIN  35')
         le1=mav_putvalue_src1
         lex=bin(le1)[2:]
         lex=lex.zfill(32)
@@ -429,7 +429,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
                 return mav_putvalue_src2
 
     if((func7 == "0000101")  and (func3 == "101") and (opcode == "0110011")):
-        print('--MAX 36')
+        #print('--MAX 36')
         le1=mav_putvalue_src1
         lex=bin(le1)[2:]
         lex=lex.zfill(32)
@@ -453,7 +453,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
                 return mav_putvalue_src2
 
     if((func7 == "0000101")  and (func3 == "110") and (opcode == "0110011")):
-        print('--MINU  37')
+        #print('--MINU  37')
         if (mav_putvalue_src1 <  mav_putvalue_src2):
             mav_putvalue=mav_putvalue_src1
         else:
@@ -462,7 +462,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0000101")  and (func3 == "111") and (opcode == "0110011")):
-        print('--MAXU 38')
+        #print('--MAXU 38')
         if (mav_putvalue_src1 >  mav_putvalue_src2):
             mav_putvalue=mav_putvalue_src1
         else:
@@ -471,7 +471,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0100100")  and (func3 == "110") and (opcode == "0110011")):
-        print('--BDEP 39')
+        #print('--BDEP 39')
         r=0
         j=0
         for i in range(32):
@@ -484,7 +484,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0000100")  and (func3 == "110") and (opcode == "0110011")):
-        print('--BEXT 40')
+        #print('--BEXT 40')
         r=0
         j=0
         for i in range(32):
@@ -497,7 +497,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0000100")  and (func3 == "100") and (opcode == "0110011")):
-        print('--PACK 41')
+        #print('--PACK 41')
         lower = (mav_putvalue_src1 << 16) >> 16
         lower=lower & 0x0000ffff
         upper =mav_putvalue_src2 << 16
@@ -507,7 +507,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0100100")  and (func3 == "100") and (opcode == "0110011")):
-        print('--PACKU 42')
+        #print('--PACKU 42')
         lower = (mav_putvalue_src1 >> 16)
         upper =mav_putvalue_src2 >> 16 << 16
         mav_putvalue=lower | upper
@@ -515,7 +515,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0000100")  and (func3 == "111") and (opcode == "0110011")):
-        print('--PACKH 45')
+        #print('--PACKH 45')
         lower = mav_putvalue_src1& 255
         upper = (mav_putvalue_src2 & 255) << 8
         mav_putvalue=lower | upper
@@ -523,7 +523,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_imm == "00100")  and (func3 == "001") and (opcode == "0010011")):
-        print('--SLOI  46')
+        #print('--SLOI  46')
         out=((mav_putvalue_src1)<< shamt_imm)
         res=out
         min_i=0
@@ -540,7 +540,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
 #           return ~(~rs1 >> shamt);
 #        }
     if((func7_imm == "00100") and (func7_fsri_1bit != "1") and (func3 == "101") and (opcode == "0010011")):
-        print('--SROI 47')
+        #print('--SROI 47')
         out=((mav_putvalue_src1)>> shamt_imm)
         res=out
         min_i=32-shamt_imm
@@ -553,7 +553,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_imm == "01100") and (func7_fsri_1bit != "1") and (func3 == "101") and (opcode == "0010011")):
-        print('--RORI  48')
+        #print('--RORI  48')
         imm_value = int(le[length-27:length-20],2)
         shamt_imm = imm_value & (31)
         out=(mav_putvalue_src1 >> shamt_imm) | (mav_putvalue_src1 << ((32-shamt_imm) & (31)))
@@ -563,28 +563,28 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_imm == "01001")  and (func3 == "001") and (opcode == "0010011")):
-        print('--SBCLRI   49')
+        #print('--SBCLRI   49')
         out= mav_putvalue_src1 & (~(1<<shamt_imm))
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7_imm == "00101") and (func3 == "001") and (opcode == "0010011")):
-        print('--SBSETI   50')
+        #print('--SBSETI   50')
         out= mav_putvalue_src1 | (1<<shamt_imm)
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7_imm == "01101")  and (func3 == "001") and (opcode == "0010011")):
-        print('--SBINVI  51')
+        #print('--SBINVI  51')
         out= mav_putvalue_src1  ^ (1<<shamt_imm)
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
 
     if((func7_imm == "01001")  and (func3 == "101") and (opcode == "0010011")):
-        print('--SBEXTI  52')
+        #print('--SBEXTI  52')
         out= 1 & (mav_putvalue_src1 >> shamt_imm)
         mav_putvalue=out & 0xffffffff
         mav_putvalue=(mav_putvalue<<1)|1
@@ -596,7 +596,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return x
 
     if((func7 == "0000100")  and (func3 == "001") and (opcode == "0110011")):
-        print('--SHFL  53')
+        #print('--SHFL  53')
         x= mav_putvalue_src1
         shamt= mav_putvalue_src2 & (15)
         if(shamt & 8):
@@ -611,7 +611,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return x
 
     if((func7 == "0000100")  and (func3 == "101") and (opcode == "0110011")):
-        print('--UNSHFL  54')
+        #print('--UNSHFL  54')
         x= mav_putvalue_src1
         shamt= mav_putvalue_src2 & (15)
         mav_putvalue=mav_putvalue_src1
@@ -631,7 +631,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_imm_SHFL == "000010")  and (func3 == "001") and (opcode == "0010011")):
-        print('--SHFLI  55 (check)')
+        #print('--SHFLI  55 (check)')
         imm_value = le[length-26:length-20]
         imm_value=(int(str(imm_value),2))
         x= mav_putvalue_src1
@@ -649,7 +649,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return x
 
     if((func7_imm_SHFL == "000010")  and (func3 == "101") and (opcode == "0010011")):
-        print('--UNSHFLI  56  (check)')
+        #print('--UNSHFLI  56  (check)')
         imm_value = le[length-26:length-20]
         imm_value=(int(str(imm_value),2))
         x= mav_putvalue_src1
@@ -671,7 +671,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_imm == "00101") and (func7_fsri_1bit != "1") and (func3 == "101") and (opcode == "0010011")):
-        print('--GORCI 57')
+        #print('--GORCI 57')
         x=mav_putvalue_src1
         if (shamt_imm & 1):
             x= x | ((x & 0x55555555)<< 1) | ((x & 0xaaaaaaaa) >>1)
@@ -688,7 +688,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_imm == "01101")and(func7_fsri_1bit != "1") and (func3 == "101") and (opcode == "0010011")):
-        print('--GREVI  58')
+        #print('--GREVI  58')
         imm_value = le[length-25:length-20]
         imm_value=(int(str(imm_value),2))
         shamt_imm= imm_value & (31)
@@ -711,7 +711,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7_fsri_1bit == "1")   and (func3 == "101") and (opcode == "0010011")):
-        print('--_FSRI  59')
+        #print('--_FSRI  59')
         fsr_imm_value = le[length-26:length-20]
         fsr_imm_value=(int(str(fsr_imm_value),2))
         shamt1= fsr_imm_value & (63)
@@ -734,7 +734,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
 
 
     def slo(src1,src2):
-        print('--SLO function')
+        #print('--SLO function')
         shamt1= src2 & (31)
         out=((src1)<< shamt1)
         res=out
@@ -747,7 +747,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         return mav_putvalue
 
     if((func7 == "0100100")  and (func3 == "111") and (opcode == "0110011")):
-        print('--BFP  60')
+        #print('--BFP  60')
         cfg = mav_putvalue_src2 >> (16)
         leng=0
         off=0
@@ -769,6 +769,6 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
 
 
     #print('--INVALID ')
-    return 0
+    return -1
 
 
